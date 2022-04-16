@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" >
+ 
+    <script src="/socket.io/socket.io.js"></script>
+
+    <!-- <link rel="stylesheet" href="./style.css"> -->
+
+    <script  type="text/javascript" >
+            
+
+          let name= prompt('enter your name')
+
+            var socket = io.connect('http://localhost:3000')
+            
+            socket.on('messages',function(data,name){
+                displaymassege(data,"message_from_someone",name)
+            })
+            
+
+            function sendmessage (){
+            
+                let text_message=document.getElementsByClassName('message-content')[0].value
+                document.getElementsByClassName('message-content')[0].value=''
+                displaymassege(text_message,"message","you")
+                socket.emit('message',text_message,name)
+            }
+
+            function displaymassege(text_message,class_name,name){
+                let chat_area=document.getElementsByClassName("chat-area")[0]
+                let message=document.createElement('div')
+                message.className=class_name
+                message.innerHTML=`${name}:${text_message}`
+                chat_area.appendChild(message)
+            }
+    </script>
+    <style>
+        body{
+    
+
+}
+.message_from_someone{
+    height: 20px;
+    width: 200px;
+    font-size: 24;
+    margin: 5px;
+    background-color: yellowgreen;
+    border-radius: 10px;
+    padding: 5px;
+    align-items: left;
+
+}
+.container{
+    width: 500px;
+    height: 500px;
+
+    background-color: aqua;
+    margin: 15px;
+    padding: 10px;
+   
+    border: solid black;
+    border-radius: 10px;
+  
+ 
+
+
+}
+.chat-area{
+    height: 300px;
+    width: 300px;
+    background-color: aliceblue;
+    padding: 10px;
+    border-radius: 10px;
+    
+}
+.controlers{
+    display: flex;
+    padding: 10px;
+    margin: 10px;
+}
+.message-content{
+    height: 20px;
+    width: 300px;
+    border-radius: 10px;
+    padding: 10px;
+}
+#send-button{
+    height: 20px;
+    width: 50px;
+    margin-left: 15px;
+    
+}
+.message{
+    height: 20px;
+    width: 200px;
+    font-size: 24;
+    margin: 5px;
+    background-color: blue;
+    border-radius: 10px;
+    padding: 5px;
+
+}
+    </style>
+
+    <title>Document</title>
+</head>
+<body>
+    
+  
+        <div class="container">
+            <div class="chat-area">
+                
+            </div>
+            <div class="controlers">
+                <label>message:</label>
+                <input type="text" class="message-content">
+                <input type="button"  value="send" id="send-button" onclick="sendmessage()"/>
+                
+            </div>
+    
+        </div>
+        
+    
+</body>
+</html>
